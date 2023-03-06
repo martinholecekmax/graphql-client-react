@@ -1,0 +1,23 @@
+.content {
+  padding: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.back {
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
