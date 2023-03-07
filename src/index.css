@@ -1,3 +1,20 @@
+/* variables */
+html {
+  --body-background-color: #ffffff;
+
+  --table-header-color: #f7f9fa;
+  --table-header-border-color: #e5ebed;
+  --table-header-text-color: #8091a5;
+  --table-header-background-color: #f7f9fa;
+  --table-row-text-color: #536171;
+  --table-row-border-color: #e5ebed;
+  --table-row-background-color: #fff;
+
+  --navbar-background-color: #141627;
+  --navbar-text-color: #ffffff;
+}
+
 body {
   margin: 0;
+  background-color: var(--body-background-color) !important;
 }

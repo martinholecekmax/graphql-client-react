@@ -1,8 +1,16 @@
-.content {
-  padding: 40px;
+.container {
+  padding: 0px 40px;
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 40px;
+  margin-bottom: 0px;
+}
+
+.titleWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,0 +1,28 @@
+.title {
+  margin-bottom: 5px;
+  font-size: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.image {
+  width: 50px;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.icon {
+  cursor: pointer;
+  color: #4b4b4b;
+  font-size: 20px;
+}
+
+.icon:hover {
+  color: #000;
+}

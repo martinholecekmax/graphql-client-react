@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/header/header';
-import ImageUpload from '../components/image-upload/image-upload';
+import Images from '../components/images/images';
 import TextArea from '../components/text-area/text-area';
 import TextField from '../components/text-field/text-field';
 import {
@@ -31,7 +31,7 @@ const Product = () => {
       variables: { id },
       refetchQueries: [{ query: GET_PRODUCTS }],
       update: () => {
-        navigate('/');
+        navigate('/products');
       },
     }
   );
@@ -77,7 +77,7 @@ const Product = () => {
   return (
     <div className={styles.container}>
       <Header>
-        <div className={styles.header}>
+        <div className={styles.titleWrapper}>
           <FontAwesomeIcon
             icon={faArrowLeft}
             className={styles.back}
@@ -111,12 +111,6 @@ const Product = () => {
           value={product.title}
           onChange={handleUpdate}
         />
-        <ImageUpload
-          field='images'
-          label='Images'
-          images={product.images}
-          onChange={handleUpdate}
-        />
         <TextField
           field='path'
           label='Path'
@@ -135,6 +129,12 @@ const Product = () => {
           label='Description'
           rows={5}
           value={product.description}
+          onChange={handleUpdate}
+        />
+        <Images
+          field='images'
+          label='Images'
+          images={product.images}
           onChange={handleUpdate}
         />
       </div>

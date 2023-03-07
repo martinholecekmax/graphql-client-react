@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/home';
+import ProductsPage from './pages/products';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+import Product from './pages/product';
+import Navbar from './layout/navbar';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Product from './pages/product';
+import Home from './pages/home';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -20,11 +22,21 @@ const client = new ApolloClient({
 const router = new createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/product/:id',
-    element: <Product />,
+    element: <Navbar />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: '/products',
+        element: <ProductsPage />,
+      },
+      {
+        path: '/products/:id',
+        element: <Product />,
+      },
+    ],
   },
 ]);
 
