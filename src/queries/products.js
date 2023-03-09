@@ -7,10 +7,18 @@ export const GET_PRODUCTS = gql`
       title
       description
       price
-      images {
+      imageCollection {
+        createdAt
         id
-        fileName
-        url
+        images {
+          id
+          fileName
+          url
+          alt
+          imageType
+          createdAt
+          rootDirectory
+        }
       }
       createdAt
       updatedAt
@@ -29,14 +37,18 @@ export const GET_PRODUCT = gql`
       price
       createdAt
       updatedAt
-      images {
-        id
-        fileName
-        url
-        alt
-        imageType
+      imageCollection {
         createdAt
-        rootDirectory
+        id
+        images {
+          id
+          fileName
+          url
+          alt
+          imageType
+          createdAt
+          rootDirectory
+        }
       }
     }
   }
@@ -76,14 +88,18 @@ export const UPDATE_PRODUCT = gql`
       path
       description
       price
-      images {
-        id
-        fileName
-        url
-        alt
-        imageType
+      imageCollection {
         createdAt
-        rootDirectory
+        id
+        images {
+          id
+          fileName
+          url
+          alt
+          imageType
+          createdAt
+          rootDirectory
+        }
       }
       createdAt
       updatedAt

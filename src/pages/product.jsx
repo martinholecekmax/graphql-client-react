@@ -57,7 +57,6 @@ const Product = () => {
           description: product.description,
           path: product.path,
           price,
-          images: product.images,
         },
       },
     });
@@ -131,12 +130,7 @@ const Product = () => {
           value={product.description}
           onChange={handleUpdate}
         />
-        <Images
-          field='images'
-          label='Images'
-          images={product.images}
-          onChange={handleUpdate}
-        />
+        <Images imageCollectionId={product.imageCollection?.id} />
       </div>
     </div>
   );

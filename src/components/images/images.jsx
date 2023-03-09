@@ -1,6 +1,11 @@
+import { useMutation, useQuery } from '@apollo/client';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import {
+  GET_IMAGE_COLLECTION,
+  UPLOAD_IMAGE,
+} from '../../queries/image-collection';
 import CustomModal from '../custom-modal/custom-modal';
 import CustomTable from '../custom-table/custom-table';
 import ImageUpload from '../image-upload/image-upload';
@@ -8,13 +13,41 @@ import TextField from '../text-field/text-field';
 
 import * as styles from './images.module.css';
 
-const Images = ({ onChange, field, images }) => {
-  const [showModal, setShowModal] = useState(false);
+const Images = ({ imageCollectionId }) => {
+  const { loading, error, data } = useQuery(GET_IMAGE_COLLECTION, {
+    variables: { id: imageCollectionId },
+  });
 
+  const [uploadImage] = useMutation(UPLOAD_IMAGE);
+
+  const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState({});
+  const [file, setFile] = useState(null);
 
   const onSave = () => {
     console.log('save');
+    if (image.id) {
+      if (file) {
+        console.log('file', file);
+      }
+    } else {
+      if (file) {
+        uploadImage({
+          variables: {
+            file,
+            alt: image.alt,
+            id: imageCollectionId,
+          },
+          refetchQueries: [
+            {
+              query: GET_IMAGE_COLLECTION,
+              variables: { id: imageCollectionId },
+            },
+          ],
+        });
+        onClose();
+      }
+    }
   };
 
   const onClose = () => {
@@ -34,6 +67,7 @@ const Images = ({ onChange, field, images }) => {
 
   const onAdd = () => {
     console.log('add');
+    setFile(null);
     setImage({});
     setShowModal(true);
   };
@@ -45,7 +79,15 @@ const Images = ({ onChange, field, images }) => {
     });
   };
 
-  const data = images?.map((image) => {
+  const onUploadChange = (file) => {
+    setFile(file);
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error :(</div>;
+
+  const images = data?.imageCollection?.images;
+  const tableData = images?.map((image) => {
     const thumbnail = (
       <img
         src={image.url || 'https://via.placeholder.com/150'}
@@ -86,7 +128,7 @@ const Images = ({ onChange, field, images }) => {
           Add New Image
         </button>
       </div>
-      <CustomTable data={data} columns={columns} headers={headers} />
+      <CustomTable data={tableData} columns={columns} headers={headers} />
       <CustomModal
         show={showModal}
         image={image}
@@ -94,7 +136,15 @@ const Images = ({ onChange, field, images }) => {
         onClose={onClose}
         isDisabled={false}
       >
-        <ImageUpload image={image} />
+        {file ? (
+          <img
+            src={URL.createObjectURL(file)}
+            alt={image.alt}
+            className={styles.image}
+          />
+        ) : (
+          <ImageUpload image={image} onChange={onUploadChange} />
+        )}
         <TextField
           label='Alt'
           value={image.alt}

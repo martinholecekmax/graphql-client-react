@@ -44,7 +44,8 @@ const ProductsPage = () => {
   if (!data) return <p>Not found</p>;
 
   const products = data?.allProducts?.map((product) => {
-    const firstImage = product.images[0] || {};
+    const imageCollection = product.imageCollection || {};
+    const firstImage = imageCollection.images[0] || {};
     const thumbnail = (
       <img
         src={firstImage.url || 'https://via.placeholder.com/150'}
