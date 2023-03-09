@@ -1,10 +1,10 @@
-.dragArea {
+.container {
   margin-bottom: 16px;
   display: flex;
   justify-content: center;
 }
 
-.dragAreaInner {
+.content {
   background-color: #eeeeee;
   border: 2px dashed #bdbdbd;
   border-radius: 6px;
@@ -18,8 +18,8 @@
   cursor: pointer;
 }
 
-.dragAreaInner:active,
-.dragAreaInner:hover {
+.content:active,
+.content:hover {
   color: #8d8d8d;
   border-color: #8d8d8d;
 }

@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import {
   GET_IMAGE_COLLECTION,
+  REMOVE_IMAGE,
   UPLOAD_IMAGE,
 } from '../../queries/image-collection';
 import CustomModal from '../custom-modal/custom-modal';
 import CustomTable from '../custom-table/custom-table';
 import ImageUpload from '../image-upload/image-upload';
 import TextField from '../text-field/text-field';
+import Image from './image';
 
 import * as styles from './images.module.css';
 
@@ -18,6 +20,7 @@ const Images = ({ imageCollectionId }) => {
     variables: { id: imageCollectionId },
   });
 
+  const [removeImage] = useMutation(REMOVE_IMAGE);
   const [uploadImage] = useMutation(UPLOAD_IMAGE);
 
   const [showModal, setShowModal] = useState(false);
@@ -27,10 +30,12 @@ const Images = ({ imageCollectionId }) => {
   const onSave = () => {
     console.log('save');
     if (image.id) {
+      // Update
       if (file) {
         console.log('file', file);
       }
     } else {
+      // Create
       if (file) {
         uploadImage({
           variables: {
@@ -56,7 +61,15 @@ const Images = ({ imageCollectionId }) => {
   };
 
   const onRemove = (image) => {
-    console.log('remove', image);
+    removeImage({
+      variables: { imageId: image.id, id: imageCollectionId },
+      refetchQueries: [
+        {
+          query: GET_IMAGE_COLLECTION,
+          variables: { id: imageCollectionId },
+        },
+      ],
+    });
   };
 
   const onEdit = (image) => {
@@ -79,8 +92,16 @@ const Images = ({ imageCollectionId }) => {
     });
   };
 
-  const onUploadChange = (file) => {
+  const onDrop = (file) => {
     setFile(file);
+  };
+
+  const clearImage = () => {
+    setFile(null);
+    setImage({
+      ...image,
+      url: '',
+    });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -119,7 +140,7 @@ const Images = ({ imageCollectionId }) => {
   const columns = ['thumbnail', 'url', 'alt', 'actions'];
 
   const headers = ['Thumbnail', 'Url', 'Alt', 'Actions'];
-
+  const url = file ? URL.createObjectURL(file) : image.url;
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -136,14 +157,10 @@ const Images = ({ imageCollectionId }) => {
         onClose={onClose}
         isDisabled={false}
       >
-        {file ? (
-          <img
-            src={URL.createObjectURL(file)}
-            alt={image.alt}
-            className={styles.image}
-          />
+        {url ? (
+          <Image url={url} alt={image?.alt} onRemove={clearImage} />
         ) : (
-          <ImageUpload image={image} onChange={onUploadChange} />
+          <ImageUpload onDrop={onDrop} />
         )}
         <TextField
           label='Alt'

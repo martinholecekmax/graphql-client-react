@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as styles from './text-field.module.css';
 
@@ -17,6 +18,7 @@ const TextField = ({
       value: e.target.value,
     });
   };
+  console.log('value', value);
 
   return (
     <div className={styles.container}>
@@ -31,6 +33,28 @@ const TextField = ({
       {error ? <div className={styles.error}>{error}</div> : null}
     </div>
   );
+};
+
+TextField.defaultProps = {
+  containerClass: '',
+  label: '',
+  placeholder: '',
+  value: '',
+  field: '',
+  error: '',
+  onChange: () => {},
+  onBlur: () => {},
+};
+
+TextField.propTypes = {
+  containerClass: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  field: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 export default TextField;

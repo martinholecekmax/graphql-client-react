@@ -1,27 +1,26 @@
+import React from 'react';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import * as styles from './image-upload.module.css';
 
-const ImageUpload = ({ image, onChange }) => {
-  console.log('image', image);
+const ImageUpload = ({ onDrop }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: 'image/*',
+    accept: {
+      'image/*': ['.jpeg', '.png'],
+    },
     onDrop: (acceptedFiles) => {
-      onChange(acceptedFiles[0]);
+      onDrop(acceptedFiles[0]);
     },
   });
 
   return (
-    <div className={styles.dragArea}>
+    <div className={styles.container}>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         <div
-          className={`${isDragActive ? styles.active : ''} ${
-            styles.dragAreaInner
-          }`}
+          className={`${isDragActive ? styles.active : ''} ${styles.content}`}
         >
           <div className={styles.icon}>
             <FontAwesomeIcon icon={faCloudUploadAlt} />

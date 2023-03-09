@@ -26,3 +26,11 @@ export const UPLOAD_IMAGE = gql`
     }
   }
 `;
+
+export const REMOVE_IMAGE = gql`
+  mutation RemoveImageFromCollection($id: ID!, $imageId: ID!) {
+    removeImageFromImageCollection(id: $id, imageId: $imageId) {
+      id
+    }
+  }
+`;

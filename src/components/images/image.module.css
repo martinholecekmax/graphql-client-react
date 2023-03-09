@@ -1,0 +1,33 @@
+.container {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.image {
+  height: 200px;
+  width: 200px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.removeButton {
+  display: flex;
+  padding: 10px;
+  background-color: #eeeeee;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+}
+
+.removeButton:hover {
+  background-color: #bdbdbd;
+  cursor: pointer;
+}
