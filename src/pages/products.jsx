@@ -5,6 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomTable from '../components/custom-table/custom-table';
 import Header from '../components/header/header';
+import Thumbnail from '../components/thumbnail/thumbnail';
 import {
   CREATE_PRODUCT,
   GET_PRODUCTS,
@@ -46,17 +47,7 @@ const ProductsPage = () => {
   const products = data?.allProducts?.map((product) => {
     const imageCollection = product.imageCollection || {};
     const firstImage = imageCollection.images[0] || {};
-    const thumbnail = (
-      <img
-        src={firstImage.url || 'https://via.placeholder.com/150'}
-        alt={firstImage.alt}
-        className={styles.image}
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = 'https://via.placeholder.com/150';
-        }}
-      />
-    );
+    const thumbnail = <Thumbnail url={firstImage.url} alt={firstImage.alt} />;
     const path = `/products/${product.id}`;
 
     const actions = (

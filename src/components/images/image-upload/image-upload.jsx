@@ -5,23 +5,28 @@ import { useDropzone } from 'react-dropzone';
 
 import * as styles from './image-upload.module.css';
 
-const ImageUpload = ({ onDrop }) => {
+const ImageUpload = ({ field, onChange, error }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       'image/*': ['.jpeg', '.png'],
     },
     onDrop: (acceptedFiles) => {
-      onDrop(acceptedFiles[0]);
+      onChange({
+        field,
+        value: acceptedFiles[0],
+      });
     },
   });
+
+  const activeStyle = isDragActive ? styles.active : '';
+  const errorStyle = error ? styles.error : '';
+  const contentStyle = `${styles.content} ${activeStyle} ${errorStyle}`;
 
   return (
     <div className={styles.container}>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <div
-          className={`${isDragActive ? styles.active : ''} ${styles.content}`}
-        >
+        <div className={contentStyle}>
           <div className={styles.icon}>
             <FontAwesomeIcon icon={faCloudUploadAlt} />
           </div>

@@ -34,3 +34,17 @@ export const REMOVE_IMAGE = gql`
     }
   }
 `;
+
+export const UPDATE_IMAGE = gql`
+  mutation UpdateImage($id: ID!, $file: Upload, $alt: String) {
+    updateImage(id: $id, file: $file, alt: $alt) {
+      id
+      fileName
+      url
+      alt
+      imageType
+      createdAt
+      rootDirectory
+    }
+  }
+`;

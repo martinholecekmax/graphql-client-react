@@ -18,7 +18,6 @@ const TextField = ({
       value: e.target.value,
     });
   };
-  console.log('value', value);
 
   return (
     <div className={styles.container}>

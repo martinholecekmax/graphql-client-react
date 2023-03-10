@@ -7,10 +7,6 @@
   margin-bottom: 15px;
 }
 
-.image {
-  width: 50px;
-}
-
 .actions {
   display: flex;
   gap: 20px;
