@@ -22,7 +22,7 @@ const TextArea = ({
     <div className={styles.container}>
       <div className={styles.label}>{label}</div>
       <textarea
-        className={`form-control ${error ? 'is-invalid' : ''}`}
+        className={`form-control ${styles.input} ${error ? 'is-invalid' : ''}`}
         type={'text'}
         rows={rows}
         value={value}

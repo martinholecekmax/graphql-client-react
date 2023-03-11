@@ -3,6 +3,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '../components/button/button';
 import CustomTable from '../components/custom-table/custom-table';
 import Header from '../components/header/header';
 import Thumbnail from '../components/thumbnail/thumbnail';
@@ -24,6 +25,7 @@ const ProductsPage = () => {
       variables: {
         input: {
           title: 'New product',
+          path: 'new-product',
           description: 'New product description',
           price: 100,
         },
@@ -55,7 +57,7 @@ const ProductsPage = () => {
         <Link to={path} className={styles.link}>
           <FontAwesomeIcon icon={faEdit} className={styles.icon} />
         </Link>
-        <div onClick={onRemove}>
+        <div onClick={() => onRemove(product.id)}>
           <FontAwesomeIcon icon={faTrashAlt} className={styles.icon} />
         </div>
       </div>
@@ -85,9 +87,9 @@ const ProductsPage = () => {
     <div className={styles.container}>
       <Header>
         <div className={styles.title}>Products</div>
-        <button className={`btn btn-primary`} onClick={createProduct}>
+        <Button onClick={createProduct} variant='primary'>
           Create New Product
-        </button>
+        </Button>
       </Header>
       {createProductError ? (
         <div className='alert alert-danger' role='alert'>

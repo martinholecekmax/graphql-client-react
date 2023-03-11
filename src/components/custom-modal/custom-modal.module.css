@@ -21,6 +21,14 @@
   text-align: left;
 }
 
+.content {
+  background-color: var(--modal-background-color) !important;
+}
+
+.modalHeader {
+  border-bottom: 1px solid var(--modal-border-color) !important;
+}
+
 .title {
   display: flex;
   justify-content: space-between;
@@ -39,16 +47,5 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
-}
-
-.confirmButton {
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.cancelButton {
-  font-weight: 600;
-  font-size: 18px;
-  border: unset !important;
-  margin-right: 10px;
+  gap: 10px;
 }

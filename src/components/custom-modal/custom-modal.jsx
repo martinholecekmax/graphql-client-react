@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import Button from '../button/button';
 
 import * as styles from './custom-modal.module.css';
 
@@ -10,8 +11,9 @@ const CustomModal = ({ onSave, onClose, show, isDisabled, children }) => {
       onHide={onClose}
       className={styles.modal}
       dialogClassName={styles.dialog}
+      contentClassName={styles.content}
     >
-      <Modal.Header>
+      <Modal.Header className={styles.modalHeader}>
         <div className={styles.title}>
           <div>Image</div>
           <div onClick={onClose} className={styles.close}>
@@ -22,19 +24,12 @@ const CustomModal = ({ onSave, onClose, show, isDisabled, children }) => {
       <Modal.Body className={styles.modalBody}>
         {children}
         <div className={styles.buttons}>
-          <button
-            className={`btn btn-outline-secondary ${styles.cancelButton}`}
-            onClick={onClose}
-          >
+          <Button variant='tertiary' onClick={onClose}>
             Cancel
-          </button>
-          <button
-            className={`btn btn-success ${styles.confirmButton}`}
-            onClick={onSave}
-            disabled={isDisabled}
-          >
+          </Button>
+          <Button variant='primary' onClick={onSave} disabled={isDisabled}>
             Save
-          </button>
+          </Button>
         </div>
       </Modal.Body>
     </Modal>

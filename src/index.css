@@ -1,20 +1,121 @@
 /* variables */
 html {
-  --body-background-color: #ffffff;
+  --body-background-color: #1e1e1e;
+  --title-color: #cccccc;
+  --text-color: #cccccc;
 
-  --table-header-color: #f7f9fa;
-  --table-header-border-color: #e5ebed;
-  --table-header-text-color: #8091a5;
-  --table-header-background-color: #f7f9fa;
-  --table-row-text-color: #536171;
-  --table-row-border-color: #e5ebed;
-  --table-row-background-color: #fff;
+  --navbar-background-color: #3c3c3c;
+  --navbar-link-color: #ffffff;
+  --navbar-link-hover-color: #c4c4c4;
 
-  --navbar-background-color: #141627;
-  --navbar-text-color: #ffffff;
+  --table-header-background-color: #252526;
+  --table-header-color: #cccccc;
+  --table-header-border-color: #414141;
+
+  --table-row-background-color: none;
+  --table-row-text-color: #bbbbbb;
+  --table-row-border-color: #414141;
+  --table-row-hover-background-color: #37373d;
+
+  --table-icon-color: #bbbbbb;
+  --table-icon-hover-color: #fefefe;
+
+  --color-primary: #f15223;
+
+  /* Input */
+  --input-color: #cccccc;
+  --input-background-color: none;
+  --input-border-color: #4f4f55;
+  --input-label-color: #4f4f55;
+
+  /* Primary Button */
+  --btn-primary-color: #ffffff;
+  --btn-primary-background-color: #f15223;
+  --btn-primary-border-color: #f15223;
+
+  --btn-primary-hover-color: #ffffff;
+  --btn-primary-hover-background-color: none;
+  --btn-primary-hover-border-color: #f15223;
+
+  /* Secondary Button */
+  --btn-secondary-color: #ffffff;
+  --btn-secondary-background-color: #5041ab;
+  --btn-secondary-border-color: #5041ab;
+
+  --btn-secondary-hover-color: #ffffff;
+  --btn-secondary-hover-background-color: none;
+  --btn-secondary-hover-border-color: #5041ab;
+
+  /* Blue */
+  --btn-blue-color: #ffffff;
+  --btn-blue-background-color: #1d4bff;
+  --btn-blue-border-color: #1d4bff;
+
+  --btn-blue-hover-color: #ffffff;
+  --btn-blue-hover-background-color: none;
+  --btn-blue-hover-border-color: #1d4bff;
+
+  /* Danger Button */
+  --btn-danger-color: #ffffff;
+  --btn-danger-background-color: #ff342b;
+  --btn-danger-border-color: #ff342b;
+
+  --btn-danger-hover-color: #ffffff;
+  --btn-danger-hover-background-color: none;
+  --btn-danger-hover-border-color: #ff342b;
+
+  /* Success Button */
+  --btn-success-color: #ffffff;
+  --btn-success-background-color: #1ea54c;
+  --btn-success-border-color: #1ea54c;
+
+  --btn-success-hover-color: #ffffff;
+  --btn-success-hover-background-color: none;
+  --btn-success-hover-border-color: #1ea54c;
+
+  /* Flat Button */
+  --btn-flat-color: #000000;
+  --btn-flat-background-color: #ffffff;
+  --btn-flat-border-color: #ffffff;
+
+  --btn-flat-hover-color: #ffffff;
+  --btn-flat-hover-background-color: none;
+  --btn-flat-hover-border-color: #ffffff;
+
+  /* Tertiary Button */
+  --btn-tertiary-color: #ccc;
+  --btn-tertiary-background-color: none;
+  --btn-tertiary-border-color: transparent;
+
+  --btn-tertiary-hover-color: #000000;
+  --btn-tertiary-hover-background-color: #ffffff;
+  --btn-tertiary-hover-border-color: #ffffff;
+
+  /* Modal */
+  --modal-background-color: #1e1e1e;
+  --modal-border-color: #4f4f55;
+
+  /* Icon */
+  --icon-color: #ffffff;
+  --icon-background-color: #f15223;
+  --icon-border-color: #f15223;
+
+  --icon-hover-color: #ffffff;
+  --icon-hover-background-color: none;
+  --icon-hover-border-color: #f15223;
+
+  /* Upload Area */
+  --upload-area-background-color: none;
+  --upload-area-border-color: #4f4f55;
+  --upload-area-text-color: #4f4f55;
+
+  --upload-area-hover-background-color: none;
+  --upload-area-hover-border-color: #cccccc;
+  --upload-area-hover-text-color: #cccccc;
 }
 
 body {
   margin: 0;
+  color: var(--text-color) !important;
   background-color: var(--body-background-color) !important;
 }

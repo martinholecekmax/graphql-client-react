@@ -16,6 +16,7 @@ import Image from './image/image';
 
 import * as styles from './images.module.css';
 import Thumbnail from '../thumbnail/thumbnail';
+import Button from '../button/button';
 
 const Images = ({ imageCollectionId }) => {
   const {
@@ -30,7 +31,7 @@ const Images = ({ imageCollectionId }) => {
   const [uploadImage] = useMutation(UPLOAD_IMAGE);
   const [updateImage] = useMutation(UPDATE_IMAGE);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [image, setImage] = useState({});
   const [error, setError] = useState(null);
 
@@ -153,11 +154,11 @@ const Images = ({ imageCollectionId }) => {
   const url = image.file ? URL.createObjectURL(image.file) : image.url;
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <div>Images</div>
-        <button className={`btn btn-primary ${styles.button}`} onClick={onAdd}>
+      <div className={styles.header}>
+        <div className={styles.title}>Images</div>
+        <Button onClick={onAdd} variant='primary'>
           Add New Image
-        </button>
+        </Button>
       </div>
       <CustomTable data={tableData} columns={columns} headers={headers} />
       <CustomModal

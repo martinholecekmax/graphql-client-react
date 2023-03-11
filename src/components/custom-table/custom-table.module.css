@@ -6,15 +6,20 @@
 .table thead {
   background-color: var(--table-header-background-color);
   border-bottom: 1px solid var(--table-header-border-color);
-  color: var(--table-header-text-color);
+  color: var(--table-header-color);
 }
 
 .table th {
-  padding: 10px 20px;
+  padding: 15px 20px;
+}
+
+.table tbody tr:hover {
+  background-color: var(--table-row-hover-background-color);
 }
 
 .table td {
-  padding: 10px 20px;
+  padding: 15px 20px;
   color: var(--table-row-text-color);
   border-bottom: 1px solid var(--table-row-border-color);
+  background-color: var(--table-row-background-color);
 }

@@ -5,7 +5,7 @@ import * as styles from './text-field.module.css';
 
 const TextField = ({
   onChange,
-  type = 'text',
+  type,
   field,
   value,
   placeholder,
@@ -18,14 +18,13 @@ const TextField = ({
       value: e.target.value,
     });
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.label}>{label}</div>
       <input
-        className={`form-control ${error ? 'is-invalid' : ''}`}
+        className={`form-control ${styles.input} ${error ? 'is-invalid' : ''}`}
         type={type}
-        value={value}
+        value={value || ''}
         onChange={onInputChange}
         placeholder={placeholder}
       />
@@ -35,6 +34,7 @@ const TextField = ({
 };
 
 TextField.defaultProps = {
+  type: 'text',
   containerClass: '',
   label: '',
   placeholder: '',

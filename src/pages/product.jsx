@@ -3,6 +3,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Button from '../components/button/button';
 import Header from '../components/header/header';
 import Images from '../components/images/images';
 import TextArea from '../components/text-area/text-area';
@@ -85,12 +86,12 @@ const Product = () => {
           <div className={styles.title}>{product.title}</div>
         </div>
         <div className={styles.buttons}>
-          <button onClick={onSave} className={`btn btn-success`}>
+          <Button onClick={onSave} variant='primary'>
             Save
-          </button>
-          <button onClick={onRemove} className={`btn btn-danger`}>
+          </Button>
+          <Button onClick={onRemove} variant='flat'>
             Remove
-          </button>
+          </Button>
         </div>
       </Header>
       {removeProductError ? (

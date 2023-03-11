@@ -11,6 +11,8 @@ import Navbar from './layout/navbar';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/home';
+import Categories from './pages/categories';
+import Category from './pages/category';
 
 const router = new createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = new createBrowserRouter([
       {
         path: '/products/:id',
         element: <Product />,
+      },
+      {
+        path: '/categories',
+        element: <Categories />,
+      },
+      {
+        path: '/categories/:id',
+        element: <Category />,
       },
     ],
   },

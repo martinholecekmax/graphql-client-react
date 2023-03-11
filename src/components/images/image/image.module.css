@@ -17,18 +17,23 @@
   width: 200px;
   border-radius: 6px;
   margin-bottom: 10px;
-  border: 1px solid #bdbdbd;
+  /* border: 1px solid #bdbdbd; */
 }
 
 .removeButton {
   display: flex;
   padding: 10px;
-  background-color: #eeeeee;
-  border: 1px solid #bdbdbd;
+  /* background-color: #eeeeee; */
+  border: 2px solid var(--icon-border-color);
+  color: var(--icon-color);
   border-radius: 6px;
+  background-color: var(--icon-background-color);
 }
 
 .removeButton:hover {
   background-color: #bdbdbd;
   cursor: pointer;
+  color: var(--icon-hover-color);
+  background-color: var(--icon-hover-background-color);
+  border-color: var(--icon-hover-border-color);
 }

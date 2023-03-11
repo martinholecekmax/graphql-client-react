@@ -1,0 +1,25 @@
+.container {
+  padding: 80px;
+}
+
+.title {
+  font-size: 50px;
+  color: var(--title-color);
+  max-width: 600px;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.description {
+  color: var(--text-color);
+  font-size: 18px;
+  max-width: 600px;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  display: flex;
+  gap: 50px;
+  margin-top: 30px;
+}

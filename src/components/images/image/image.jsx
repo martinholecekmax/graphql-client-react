@@ -10,7 +10,7 @@ const Image = ({ url, alt, onRemove }) => {
       <div className={styles.content}>
         <img src={url} alt={alt} className={styles.image} />
         <div className={styles.removeButton} onClick={onRemove}>
-          <FontAwesomeIcon icon={faTrashAlt} className={styles.icon} />
+          <FontAwesomeIcon icon={faTrashAlt} />
         </div>
       </div>
     </div>

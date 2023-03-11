@@ -12,5 +12,9 @@
   font-size: 20px;
   display: block;
   text-decoration: none;
-  color: var(--navbar-text-color);
+  color: var(--navbar-link-color);
+}
+
+.link:hover {
+  color: var(--navbar-link-hover-color);
 }
