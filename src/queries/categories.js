@@ -1,14 +1,28 @@
 import { gql } from '@apollo/client';
 
 export const GET_CATEGORIES = gql`
-  query AllCategories {
-    allCategories {
-      id
-      title
-      path
-      createdAt
-      updatedAt
-      description
+  query AllCategories($input: CategoryConnectionInput) {
+    allCategories(input: $input) {
+      nodes {
+        id
+        title
+        path
+        createdAt
+        updatedAt
+        description
+        productCollection {
+          id
+        }
+      }
+      pageInfo {
+        currentPage
+        hasNextPage
+        hasPreviousPage
+        itemCount
+        pageCount
+        perPage
+        totalCount
+      }
     }
   }
 `;

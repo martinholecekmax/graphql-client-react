@@ -9,7 +9,7 @@
 }
 
 .link {
-  font-size: 20px;
+  font-size: var(--navbar-link-size);
   display: block;
   text-decoration: none;
   color: var(--navbar-link-color);

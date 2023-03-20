@@ -14,12 +14,12 @@ const CustomModal = ({ onSave, onClose, show, isDisabled, children }) => {
       contentClassName={styles.content}
     >
       <Modal.Header className={styles.modalHeader}>
-        <div className={styles.title}>
-          <div>Image</div>
-          <div onClick={onClose} className={styles.close}>
+        <h3 className={styles.title}>
+          <span>Image</span>
+          <span onClick={onClose} className={styles.close}>
             &times;
-          </div>
-        </div>
+          </span>
+        </h3>
       </Modal.Header>
       <Modal.Body className={styles.modalBody}>
         {children}

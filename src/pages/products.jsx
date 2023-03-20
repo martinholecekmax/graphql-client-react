@@ -1,52 +1,35 @@
-import { useMutation, useQuery } from '@apollo/client';
+import React from 'react';
+
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/button/button';
 import CustomTable from '../components/custom-table/custom-table';
-import Header from '../components/header/header';
+import LimitSelect from '../components/limit-select/limit-select';
+import Pagination from '../components/pagination/pagination';
+import StateHandler from '../components/state-handler/state-handler';
 import Thumbnail from '../components/thumbnail/thumbnail';
-import {
-  CREATE_PRODUCT,
-  GET_PRODUCTS,
-  REMOVE_PRODUCT,
-} from '../queries/products';
+import useProducts from '../hooks/products';
 
 import * as styles from './products.module.css';
+import SortSelect from '../components/sort-select/sort-select';
 
 const ProductsPage = () => {
-  const { loading, error, data } = useQuery(GET_PRODUCTS);
-  const [removeProduct, { error: removeProductError }] =
-    useMutation(REMOVE_PRODUCT);
-  const [createProduct, { error: createProductError }] = useMutation(
-    CREATE_PRODUCT,
-    {
-      variables: {
-        input: {
-          title: 'New product',
-          path: 'new-product',
-          description: 'New product description',
-          price: 100,
-        },
-      },
-      refetchQueries: [{ query: GET_PRODUCTS }],
-    }
-  );
+  const {
+    loading,
+    error,
+    nodes,
+    pageInfo,
+    limit,
+    sort,
+    changePage,
+    changeLimit,
+    changeSort,
+    onRemove,
+    onCreateProduct,
+  } = useProducts();
 
-  const onRemove = (id) => {
-    removeProduct({
-      variables: { id },
-      refetchQueries: [{ query: GET_PRODUCTS }],
-    });
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  if (!data) return <p>Not found</p>;
-
-  const products = data?.allProducts?.map((product) => {
+  const products = nodes?.map((product) => {
     const imageCollection = product.imageCollection || {};
     const firstImage = imageCollection.images[0] || {};
     const thumbnail = <Thumbnail url={firstImage.url} alt={firstImage.alt} />;
@@ -80,28 +63,33 @@ const ProductsPage = () => {
   });
 
   const columns = ['thumbnail', 'title', 'description', 'price', 'actions'];
-
   const headers = ['Thumbnail', 'Title', 'Description', 'Price', 'Actions'];
 
   return (
     <div className={styles.container}>
-      <Header>
-        <div className={styles.title}>Products</div>
-        <Button onClick={createProduct} variant='primary'>
+      <div className={styles.header}>
+        <h2>Products</h2>
+        <Button onClick={onCreateProduct} variant='primary'>
           Create New Product
         </Button>
-      </Header>
-      {createProductError ? (
-        <div className='alert alert-danger' role='alert'>
-          {createProductError.message}
+      </div>
+      <StateHandler
+        isLoading={loading}
+        hasError={error}
+        fallbackLoading={<p>Loading...</p>}
+        fallbackError={<p>Error :( {error?.message}</p>}
+      >
+        <div className={styles.actionBar}>
+          <SortSelect
+            name='ProductSortableFields'
+            sort={sort}
+            onChange={changeSort}
+          />
+          <LimitSelect limit={limit} onChange={changeLimit} />
         </div>
-      ) : null}
-      {removeProductError ? (
-        <div className='alert alert-danger' role='alert'>
-          {removeProductError.message}
-        </div>
-      ) : null}
-      <CustomTable columns={columns} headers={headers} data={products} />
+        <CustomTable columns={columns} headers={headers} data={products} />
+        <Pagination pageInfo={pageInfo} changePage={changePage} />
+      </StateHandler>
     </div>
   );
 };

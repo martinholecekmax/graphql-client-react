@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/button/button';
-import Header from '../components/header/header';
 import TextArea from '../components/text-area/text-area';
 import TextField from '../components/text-field/text-field';
 import {
@@ -62,21 +61,19 @@ const Category = () => {
 
   return (
     <div className={styles.container}>
-      <Header>
-        <div className={styles.titleWrapper}>
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            className={styles.back}
-            onClick={() => navigate(-1)}
-          />
-          <div className={styles.title}>{category.title}</div>
-        </div>
+      <div className={styles.actionBar}>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className={styles.back}
+          onClick={() => navigate(-1)}
+        />
+        <h3 className={styles.title}>{category.title}</h3>
         <div className={styles.buttons}>
           <Button onClick={onRemove} variant='flat'>
             Remove
           </Button>
         </div>
-      </Header>
+      </div>
       <div className={styles.content}>
         <TextField
           field='title'

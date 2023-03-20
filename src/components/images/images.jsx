@@ -19,6 +19,7 @@ import Thumbnail from '../thumbnail/thumbnail';
 import Button from '../button/button';
 
 const Images = ({ imageCollectionId }) => {
+  console.log('imageCollectionId', imageCollectionId);
   const {
     loading,
     error: errorCollection,
@@ -31,7 +32,7 @@ const Images = ({ imageCollectionId }) => {
   const [uploadImage] = useMutation(UPLOAD_IMAGE);
   const [updateImage] = useMutation(UPDATE_IMAGE);
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState({});
   const [error, setError] = useState(null);
 
@@ -84,6 +85,7 @@ const Images = ({ imageCollectionId }) => {
 
   const onClose = () => {
     setImage({});
+    setError(null);
     setShowModal(false);
   };
 
@@ -155,7 +157,7 @@ const Images = ({ imageCollectionId }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.title}>Images</div>
+        <h3>Images</h3>
         <Button onClick={onAdd} variant='primary'>
           Add New Image
         </Button>

@@ -1,53 +1,45 @@
-import { useMutation, useQuery } from '@apollo/client';
+import React from 'react';
+
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment/moment';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/button/button';
 import CustomTable from '../components/custom-table/custom-table';
-import Header from '../components/header/header';
+import useCategories from '../hooks/categories';
+
+import * as styles from './categories.module.css';
+import StateHandler from '../components/state-handler/state-handler';
+import SortSelect from '../components/sort-select/sort-select';
+import LimitSelect from '../components/limit-select/limit-select';
+import Pagination from '../components/pagination/pagination';
+import useCrudQuery from '../hooks/crud-query';
 import {
   CREATE_CATEGORY,
   GET_CATEGORIES,
   REMOVE_CATEGORY,
 } from '../queries/categories';
 
-import * as styles from './categories.module.css';
-
 const Categories = () => {
-  const { loading, error, data } = useQuery(GET_CATEGORIES);
+  const {
+    loading,
+    error,
+    nodes,
+    limit,
+    sort,
+    changeLimit,
+    changeSort,
+    pageInfo,
+    changePage,
+    onRemove,
+    onCreate,
+  } = useCrudQuery({
+    getQuery: GET_CATEGORIES,
+    createQuery: CREATE_CATEGORY,
+    removeQuery: REMOVE_CATEGORY,
+  });
 
-  const [removeCategory, { error: removeCategoryError }] =
-    useMutation(REMOVE_CATEGORY);
-
-  const [createCategory, { error: createCategoryError }] = useMutation(
-    CREATE_CATEGORY,
-    {
-      variables: {
-        input: {
-          title: 'New category',
-          path: 'new-category',
-          description: 'New category description',
-        },
-      },
-      refetchQueries: [{ query: GET_CATEGORIES }],
-    }
-  );
-
-  const onRemove = (id) => {
-    removeCategory({
-      variables: { id },
-      refetchQueries: [{ query: GET_CATEGORIES }],
-    });
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  if (!data) return <p>Not found</p>;
-
-  const categories = data?.allCategories?.map((category) => {
+  const categories = nodes?.map((category) => {
     const description =
       category.description?.length > 100
         ? `${category.description.substring(0, 100)}...`
@@ -64,6 +56,7 @@ const Categories = () => {
         </div>
       </div>
     );
+
     return {
       id: category.id,
       title: category.title,
@@ -74,29 +67,43 @@ const Categories = () => {
     };
   });
 
-  const columns = ['title', 'path', 'description', 'created', 'actions'];
+  const createCategory = () => {
+    const input = {
+      title: 'New Category',
+      path: 'new-category',
+      description: 'New Category Description',
+    };
+    onCreate(input);
+  };
 
+  const columns = ['title', 'path', 'description', 'created', 'actions'];
   const headers = ['Title', 'Path', 'Description', 'Created', 'Actions'];
 
   return (
     <div className={styles.container}>
-      <Header>
-        <div className={styles.title}>Categories</div>
+      <div className={styles.header}>
+        <h2>Categories</h2>
         <Button onClick={createCategory} variant='primary'>
           Create New Category
         </Button>
-      </Header>
-      {createCategoryError ? (
-        <div className='alert alert-danger' role='alert'>
-          {createCategoryError.message}
+      </div>
+      <StateHandler
+        isLoading={loading}
+        hasError={error}
+        fallbackLoading={<p>Loading...</p>}
+        fallbackError={<p>Error :( {error?.message}</p>}
+      >
+        <div className={styles.actionBar}>
+          <SortSelect
+            name='CategorySortableFields'
+            sort={sort}
+            onChange={changeSort}
+          />
+          <LimitSelect limit={limit} onChange={changeLimit} />
         </div>
-      ) : null}
-      {removeCategoryError ? (
-        <div className='alert alert-danger' role='alert'>
-          {removeCategoryError.message}
-        </div>
-      ) : null}
-      <CustomTable columns={columns} headers={headers} data={categories} />
+        <CustomTable columns={columns} headers={headers} data={categories} />
+        <Pagination pageInfo={pageInfo} changePage={changePage} />
+      </StateHandler>
     </div>
   );
 };

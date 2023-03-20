@@ -1,28 +1,39 @@
 import { gql } from '@apollo/client';
 
 export const GET_PRODUCTS = gql`
-  query AllProducts {
-    allProducts {
-      id
-      title
-      description
-      price
-      imageCollection {
-        createdAt
+  query AllProducts($input: ProductConnectionInput) {
+    allProducts(input: $input) {
+      nodes {
         id
-        images {
-          id
-          fileName
-          url
-          alt
-          imageType
+        title
+        description
+        price
+        imageCollection {
           createdAt
-          rootDirectory
+          id
+          images {
+            id
+            fileName
+            url
+            alt
+            imageType
+            createdAt
+            rootDirectory
+          }
         }
+        createdAt
+        updatedAt
+        path
       }
-      createdAt
-      updatedAt
-      path
+      pageInfo {
+        currentPage
+        hasNextPage
+        hasPreviousPage
+        itemCount
+        pageCount
+        perPage
+        totalCount
+      }
     }
   }
 `;
@@ -40,15 +51,6 @@ export const GET_PRODUCT = gql`
       imageCollection {
         createdAt
         id
-        images {
-          id
-          fileName
-          url
-          alt
-          imageType
-          createdAt
-          rootDirectory
-        }
       }
     }
   }
@@ -91,15 +93,6 @@ export const UPDATE_PRODUCT = gql`
       imageCollection {
         createdAt
         id
-        images {
-          id
-          fileName
-          url
-          alt
-          imageType
-          createdAt
-          rootDirectory
-        }
       }
       createdAt
       updatedAt

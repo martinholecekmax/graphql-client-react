@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.selectBox {
+  width: auto;
+  background-color: var(--input-background-color) !important;
+  color: var(--input-colo) !important;
+  border: 1px solid var(--input-border-color) !important;
+}
+
+.selectBox option {
+  color: var(--input-colo) !important;
+  background-color: var(--input-option-background-color) !important;
+}

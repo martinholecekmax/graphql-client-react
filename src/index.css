@@ -1,12 +1,22 @@
 /* variables */
-html {
+:root {
   --body-background-color: #1e1e1e;
   --title-color: #cccccc;
   --text-color: #cccccc;
 
+  --font-family: 'Roboto', sans-serif;
+  --fs-xl: 3.157rem;
+  --fs-l: 2.369rem;
+  --fs-m: 1.777rem;
+  --fs-s: 1.333rem;
+  --fs-xs: 1rem;
+
+  --color-error: #f44336;
+
   --navbar-background-color: #3c3c3c;
   --navbar-link-color: #ffffff;
   --navbar-link-hover-color: #c4c4c4;
+  --navbar-link-size: var(--fs-s);
 
   --table-header-background-color: #252526;
   --table-header-color: #cccccc;
@@ -19,6 +29,17 @@ html {
 
   --table-icon-color: #bbbbbb;
   --table-icon-hover-color: #fefefe;
+  --table-icon-size: var(--fs-s);
+
+  --pagination-background-color: #252526;
+  --pagination-color: #cccccc;
+  --pagination-border-color: #414141;
+
+  --pagination-hover-background-color: #37373d;
+  --pagination-hover-color: #fefefe;
+
+  --pagination-active-background-color: #37373d;
+  --pagination-active-color: #fefefe;
 
   --color-primary: #f15223;
 
@@ -27,6 +48,9 @@ html {
   --input-background-color: none;
   --input-border-color: #4f4f55;
   --input-label-color: #4f4f55;
+  --input-label-size: var(--fs-xs);
+  --input-size: var(--fs-xs);
+  --input-option-background-color: #1e1e1e;
 
   /* Primary Button */
   --btn-primary-color: #ffffff;
@@ -108,14 +132,56 @@ html {
   --upload-area-background-color: none;
   --upload-area-border-color: #4f4f55;
   --upload-area-text-color: #4f4f55;
+  --upload-icon-size: var(--fs-l);
 
   --upload-area-hover-background-color: none;
   --upload-area-hover-border-color: #cccccc;
   --upload-area-hover-text-color: #cccccc;
 }
 
+h1 {
+  font-size: var(--fs-xl) !important;
+  color: var(--title-color);
+  line-height: 1.5 !important;
+}
+
+h2 {
+  font-size: var(--fs-l) !important;
+  color: var(--title-color);
+  font-weight: 400 !important;
+  margin-bottom: 0 !important;
+}
+
+h3 {
+  font-size: var(--fs-m) !important;
+  color: var(--title-color);
+  font-weight: 400 !important;
+}
+
+h4 {
+  font-size: var(--fs-s);
+  color: var(--title-color);
+}
+
+h5 {
+  font-size: var(--fs-xs);
+  color: var(--title-color);
+}
+
+body,
+html {
+  font-family: var(--font-family) !important;
+}
+
 body {
   margin: 0;
   color: var(--text-color) !important;
   background-color: var(--body-background-color) !important;
+  font-size: var(--fs-xs);
+}
+
+p {
+  font-size: var(--fs-s) !important;
+  color: var(--text-color) !important;
+  line-height: 1.8 !important;
 }

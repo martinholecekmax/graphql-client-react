@@ -26,10 +26,10 @@
 }
 
 .icon {
-  font-size: 30px;
+  font-size: var(--upload-icon-size) !important;
 }
 
 .error {
-  color: #f44336;
-  border-color: #f44336;
+  color: var(--color-error);
+  border-color: var(--color-error);
 }

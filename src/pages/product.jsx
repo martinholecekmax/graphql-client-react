@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/button/button';
-import Header from '../components/header/header';
 import Images from '../components/images/images';
 import TextArea from '../components/text-area/text-area';
 import TextField from '../components/text-field/text-field';
@@ -20,11 +19,14 @@ import * as styles from './product.module.css';
 const Product = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  console.log('id', id);
 
   const [product, setProduct] = useState({});
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     variables: { id },
+    networkPolicy: 'cache-and-network',
   });
+  console.log('loading', loading);
 
   const [removeProduct, { error: removeProductError }] = useMutation(
     REMOVE_PRODUCT,
@@ -46,6 +48,7 @@ const Product = () => {
 
   useEffect(() => {
     setProduct(data?.product);
+    console.log('data?.product', data?.product);
   }, [data]);
 
   const onSave = () => {
@@ -76,15 +79,13 @@ const Product = () => {
 
   return (
     <div className={styles.container}>
-      <Header>
-        <div className={styles.titleWrapper}>
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            className={styles.back}
-            onClick={() => navigate(-1)}
-          />
-          <div className={styles.title}>{product.title}</div>
-        </div>
+      <div className={styles.actionBar}>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className={styles.back}
+          onClick={() => navigate(-1)}
+        />
+        <h3 className={styles.title}>{product.title}</h3>
         <div className={styles.buttons}>
           <Button onClick={onSave} variant='primary'>
             Save
@@ -93,7 +94,7 @@ const Product = () => {
             Remove
           </Button>
         </div>
-      </Header>
+      </div>
       {removeProductError ? (
         <div className='alert alert-danger' role='alert'>
           {removeProductError.message}
