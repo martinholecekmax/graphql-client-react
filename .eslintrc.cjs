@@ -8,8 +8,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
-  plugins: ['react'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  plugins: ['react', 'import-helpers'],
   rules: {
     'react-prop-types': 'off',
     'no-case-declarations': 'off',
@@ -19,6 +27,21 @@ module.exports = {
     eqeqeq: 'error',
     'prefer-const': 'error',
     'no-unused-vars': 'warn',
+    'import-helpers/order-imports': [
+      'warn',
+      {
+        newlinesBetween: 'always',
+        groups: [
+          '/^react/',
+          '/^gatsby/',
+          'module',
+          '/layout$/',
+          ['parent', 'sibling', 'index'],
+          '/.css$/',
+        ],
+        alphabetize: { order: 'asc', ignoreCase: true },
+      },
+    ],
   },
 };
 

@@ -1,24 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment/moment';
-import { Link } from 'react-router-dom';
+
 import Button from '../components/button/button';
 import CustomTable from '../components/custom-table/custom-table';
-import useCategories from '../hooks/categories';
-
-import * as styles from './categories.module.css';
-import StateHandler from '../components/state-handler/state-handler';
-import SortSelect from '../components/sort-select/sort-select';
 import LimitSelect from '../components/limit-select/limit-select';
 import Pagination from '../components/pagination/pagination';
-import useCrudQuery from '../hooks/crud-query';
+import SortSelect from '../components/sort-select/sort-select';
+import StateHandler from '../components/state-handler/state-handler';
+import useCrudQueryPersistent from '../hooks/crud-query-persistent';
 import {
   CREATE_CATEGORY,
   GET_CATEGORIES,
   REMOVE_CATEGORY,
 } from '../queries/categories';
+
+import * as styles from './categories.module.css';
 
 const Categories = () => {
   const {
@@ -33,7 +33,7 @@ const Categories = () => {
     changePage,
     onRemove,
     onCreate,
-  } = useCrudQuery({
+  } = useCrudQueryPersistent({
     getQuery: GET_CATEGORIES,
     createQuery: CREATE_CATEGORY,
     removeQuery: REMOVE_CATEGORY,

@@ -1,25 +1,26 @@
+import React, { useState } from 'react';
+
 import { useMutation, useQuery } from '@apollo/client';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+
 import {
   GET_IMAGE_COLLECTION,
   REMOVE_IMAGE,
   UPDATE_IMAGE,
   UPLOAD_IMAGE,
 } from '../../queries/image-collection';
+import Button from '../button/button';
 import CustomModal from '../custom-modal/custom-modal';
 import CustomTable from '../custom-table/custom-table';
-import ImageUpload from './image-upload/image-upload';
 import TextField from '../text-field/text-field';
+import Thumbnail from '../thumbnail/thumbnail';
+import ImageUpload from './image-upload/image-upload';
 import Image from './image/image';
 
 import * as styles from './images.module.css';
-import Thumbnail from '../thumbnail/thumbnail';
-import Button from '../button/button';
 
 const Images = ({ imageCollectionId }) => {
-  console.log('imageCollectionId', imageCollectionId);
   const {
     loading,
     error: errorCollection,
@@ -44,11 +45,14 @@ const Images = ({ imageCollectionId }) => {
     if (image.id) {
       // Update existing image
       const variables = {
-        id: image.id,
-        alt: image.alt,
+        id: imageCollectionId,
+        image: {
+          id: image.id,
+          alt: image.alt,
+        },
       };
       if (image.file) {
-        variables.file = image.file;
+        variables.image.file = image.file;
       }
       updateImage({
         variables,
@@ -65,9 +69,11 @@ const Images = ({ imageCollectionId }) => {
       if (image.file) {
         uploadImage({
           variables: {
-            file: image.file,
-            alt: image.alt,
             id: imageCollectionId,
+            image: {
+              file: image.file,
+              alt: image.alt,
+            },
           },
           refetchQueries: [
             {
@@ -151,9 +157,9 @@ const Images = ({ imageCollectionId }) => {
   });
 
   const columns = ['thumbnail', 'url', 'alt', 'actions'];
-
   const headers = ['Thumbnail', 'Url', 'Alt', 'Actions'];
   const url = image.file ? URL.createObjectURL(image.file) : image.url;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>

@@ -1,33 +1,43 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+
 import Button from '../components/button/button';
 import CustomTable from '../components/custom-table/custom-table';
 import LimitSelect from '../components/limit-select/limit-select';
 import Pagination from '../components/pagination/pagination';
+import SortSelect from '../components/sort-select/sort-select';
 import StateHandler from '../components/state-handler/state-handler';
 import Thumbnail from '../components/thumbnail/thumbnail';
-import useProducts from '../hooks/products';
+import useCrudQueryPersistent from '../hooks/crud-query-persistent';
+import {
+  CREATE_PRODUCT,
+  GET_PRODUCTS,
+  REMOVE_PRODUCT,
+} from '../queries/products';
 
 import * as styles from './products.module.css';
-import SortSelect from '../components/sort-select/sort-select';
 
 const ProductsPage = () => {
   const {
     loading,
     error,
     nodes,
-    pageInfo,
     limit,
     sort,
-    changePage,
     changeLimit,
     changeSort,
+    pageInfo,
+    changePage,
     onRemove,
-    onCreateProduct,
-  } = useProducts();
+    onCreate,
+  } = useCrudQueryPersistent({
+    getQuery: GET_PRODUCTS,
+    createQuery: CREATE_PRODUCT,
+    removeQuery: REMOVE_PRODUCT,
+  });
 
   const products = nodes?.map((product) => {
     const imageCollection = product.imageCollection || {};
@@ -65,11 +75,20 @@ const ProductsPage = () => {
   const columns = ['thumbnail', 'title', 'description', 'price', 'actions'];
   const headers = ['Thumbnail', 'Title', 'Description', 'Price', 'Actions'];
 
+  const createCategory = () => {
+    onCreate({
+      title: 'New Product',
+      path: 'new-product',
+      description: 'New Product Description',
+      price: 0,
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Products</h2>
-        <Button onClick={onCreateProduct} variant='primary'>
+        <Button onClick={createCategory} variant='primary'>
           Create New Product
         </Button>
       </div>

@@ -1,8 +1,10 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useMutation, useQuery } from '@apollo/client';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+
 import Button from '../components/button/button';
 import Images from '../components/images/images';
 import TextArea from '../components/text-area/text-area';
@@ -19,14 +21,12 @@ import * as styles from './product.module.css';
 const Product = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log('id', id);
 
   const [product, setProduct] = useState({});
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     variables: { id },
     networkPolicy: 'cache-and-network',
   });
-  console.log('loading', loading);
 
   const [removeProduct, { error: removeProductError }] = useMutation(
     REMOVE_PRODUCT,
@@ -48,7 +48,6 @@ const Product = () => {
 
   useEffect(() => {
     setProduct(data?.product);
-    console.log('data?.product', data?.product);
   }, [data]);
 
   const onSave = () => {

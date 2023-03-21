@@ -1,5 +1,7 @@
-import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
+
+import { useMutation, useQuery } from '@apollo/client';
+
 import {
   CREATE_CATEGORY,
   GET_CATEGORIES,

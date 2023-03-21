@@ -1,5 +1,7 @@
-import { useQuery } from '@apollo/client';
 import React from 'react';
+
+import { useQuery } from '@apollo/client';
+
 import { SORT_FIELDS } from '../../queries/general';
 import { camelCaseToHumanReadable } from '../../utils/general';
 

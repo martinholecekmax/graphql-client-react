@@ -20,8 +20,8 @@ export const GET_IMAGE_COLLECTION = gql`
 `;
 
 export const UPLOAD_IMAGE = gql`
-  mutation UploadImageToCollection($id: ID!, $file: Upload!, $alt: String) {
-    uploadImageToImageCollection(id: $id, file: $file, alt: $alt) {
+  mutation UploadImageToCollection($id: ID!, $image: ImageInput!) {
+    uploadImageToImageCollection(id: $id, image: $image) {
       id
     }
   }
@@ -36,15 +36,18 @@ export const REMOVE_IMAGE = gql`
 `;
 
 export const UPDATE_IMAGE = gql`
-  mutation UpdateImage($id: ID!, $file: Upload, $alt: String) {
-    updateImage(id: $id, file: $file, alt: $alt) {
+  mutation UpdateImageInCollection($id: ID!, $image: ImageInput!) {
+    updateImageInCollection(id: $id, image: $image) {
       id
-      fileName
-      url
-      alt
-      imageType
-      createdAt
-      rootDirectory
+      images {
+        id
+        fileName
+        url
+        alt
+        imageType
+        createdAt
+        rootDirectory
+      }
     }
   }
 `;

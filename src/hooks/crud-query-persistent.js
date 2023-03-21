@@ -1,6 +1,6 @@
-import { useState } from 'react';
-
 import { useMutation, useQuery } from '@apollo/client';
+
+import useQueryState from './use-query-state';
 
 /**
  * Use this hook to get a list of items from a GraphQL query.
@@ -8,9 +8,9 @@ import { useMutation, useQuery } from '@apollo/client';
  * It will return the list of items, the current limit,
  * skip and sort, and functions to change the limit, skip and sort.
  *
- * This hook uses the local state to store the limit, skip and sort.
+ * This hook uses the url query string to store the limit, skip and sort.
  */
-const useCrudQuery = ({
+const useCrudQueryPersistent = ({
   getQuery,
   createQuery,
   removeQuery,
@@ -18,12 +18,16 @@ const useCrudQuery = ({
   skip: initialSkip = 0,
   sort: initialSort = {
     field: 'title',
-    order: 'DESC',
+    order: 'ASC',
   },
 }) => {
-  const [limit, setLimit] = useState(initialLimit);
-  const [skip, setSkip] = useState(initialSkip);
-  const [sort, setSort] = useState(initialSort);
+  const [query, setQuery] = useQueryState('query');
+  const limit = parseInt(query?.limit) || initialLimit;
+  const skip = parseInt(query?.skip) || initialSkip;
+  const sort = {
+    field: query?.sort?.field || initialSort.field,
+    order: query?.sort?.order || initialSort.order,
+  };
 
   const {
     loading,
@@ -64,18 +68,20 @@ const useCrudQuery = ({
   };
 
   const changeLimit = (newLimit) => {
-    setLimit(newLimit);
+    const newQuery = { ...query, limit: newLimit, skip: 0 };
+    setQuery(newQuery);
   };
 
   const changePage = (newPage) => {
-    setSkip(newPage);
+    if (newPage < 0) return;
+    if (newPage > pageInfo.totalCount) return;
+    const newQuery = { ...query, skip: newPage };
+    setQuery(newQuery);
   };
 
   const changeSort = ({ field, order }) => {
-    setSort({
-      field,
-      order,
-    });
+    const newQuery = { ...query, sort: { field, order } };
+    setQuery(newQuery);
   };
 
   let nodes = [];
@@ -103,4 +109,4 @@ const useCrudQuery = ({
   };
 };
 
-export default useCrudQuery;
+export default useCrudQueryPersistent;
