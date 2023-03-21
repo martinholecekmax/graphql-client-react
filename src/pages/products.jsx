@@ -33,6 +33,7 @@ const ProductsPage = () => {
     changePage,
     onRemove,
     onCreate,
+    refetch,
   } = useCrudQueryPersistent({
     getQuery: GET_PRODUCTS,
     createQuery: CREATE_PRODUCT,
@@ -83,6 +84,14 @@ const ProductsPage = () => {
       price: 0,
     });
   };
+
+  // Subscriptions
+  // const { data: createProductData, loading: createProductLoading } =
+  //   useSubscription(PRODUCT_CREATE_SUBSCRIPTION);
+  // const { data: updateProductData, loading: updateProductLoading } =
+  //   useSubscription(PRODUCT_UPDATE_SUBSCRIPTION);
+  // const { data: removeProductData, loading: removeProductLoading } =
+  //   useSubscription(PRODUCT_REMOVE_SUBSCRIPTION);
 
   return (
     <div className={styles.container}>

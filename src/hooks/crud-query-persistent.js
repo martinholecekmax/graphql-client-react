@@ -33,6 +33,7 @@ const useCrudQueryPersistent = ({
     loading,
     error: getError,
     data,
+    refetch,
   } = useQuery(getQuery, {
     variables: {
       input: {
@@ -106,6 +107,7 @@ const useCrudQueryPersistent = ({
     changeSort,
     onRemove,
     onCreate,
+    refetch,
   };
 };
 
