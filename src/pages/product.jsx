@@ -23,7 +23,7 @@ const Product = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [isSaved, setIsSaved] = useState(true);
 
   const { loading, error, data } = useQuery(GET_PRODUCT, {
@@ -50,7 +50,9 @@ const Product = () => {
   };
 
   useEffect(() => {
-    setProduct(data?.product);
+    if (data) {
+      setProduct(data?.product);
+    }
   }, [data]);
 
   const onSave = () => {
@@ -77,7 +79,7 @@ const Product = () => {
     setIsSaved(false);
   };
 
-  const isLoading = !product || loading;
+  const isLoading = loading;
   const hasError = error || updateProductError || removeProductError;
 
   return (
@@ -88,7 +90,7 @@ const Product = () => {
           className={styles.back}
           onClick={() => navigate(-1)}
         />
-        <h3 className={styles.title}>{product.title}</h3>
+        <h3 className={styles.title}>{product?.title}</h3>
         <div className={styles.buttons}>
           <Button onClick={onSave} variant={isSaved ? 'primary' : 'blue'}>
             Save
@@ -108,30 +110,30 @@ const Product = () => {
           <TextField
             field='title'
             label='Title'
-            value={product.title}
+            value={product?.title}
             onChange={handleUpdate}
           />
           <TextField
             field='path'
             label='Path'
-            value={product.path}
+            value={product?.path}
             onChange={handleUpdate}
           />
           <TextField
             field='price'
             label='Price'
             type='number'
-            value={product.price}
+            value={product?.price}
             onChange={handleUpdate}
           />
           <TextArea
             field='description'
             label='Description'
             rows={5}
-            value={product.description}
+            value={product?.description}
             onChange={handleUpdate}
           />
-          <Images imageCollectionId={product.imageCollection?.id} />
+          <Images imageCollectionId={product?.imageCollection?.id} />
         </div>
       </StateHandler>
     </div>

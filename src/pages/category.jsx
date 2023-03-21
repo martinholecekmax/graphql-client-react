@@ -73,7 +73,7 @@ const Category = () => {
     setIsSaved(false);
   };
 
-  const isLoading = !category || loading;
+  const isLoading = loading;
   const hasError = error || updateCategoryError || removeCategoryError;
 
   return (
