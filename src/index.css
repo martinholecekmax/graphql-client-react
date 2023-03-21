@@ -156,6 +156,7 @@ h3 {
   font-size: var(--fs-m) !important;
   color: var(--title-color);
   font-weight: 400 !important;
+  margin-bottom: 0 !important;
 }
 
 h4 {

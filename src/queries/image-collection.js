@@ -1,20 +1,26 @@
 import { gql } from '@apollo/client';
 
+export const IMAGE_COLLECTION_FRAGMENT = gql`
+  fragment ImageCollectionFragment on ImageCollection {
+    createdAt
+    id
+    images {
+      id
+      fileName
+      url
+      alt
+      imageType
+      createdAt
+      rootDirectory
+    }
+  }
+`;
+
 export const GET_IMAGE_COLLECTION = gql`
+  ${IMAGE_COLLECTION_FRAGMENT}
   query ImageCollection($id: ID!) {
     imageCollection(id: $id) {
-      id
-      images {
-        id
-        fileName
-        url
-        alt
-        imageType
-        createdAt
-        rootDirectory
-      }
-      createdAt
-      updatedAt
+      ...ImageCollectionFragment
     }
   }
 `;
@@ -39,15 +45,6 @@ export const UPDATE_IMAGE = gql`
   mutation UpdateImageInCollection($id: ID!, $image: ImageInput!) {
     updateImageInCollection(id: $id, image: $image) {
       id
-      images {
-        id
-        fileName
-        url
-        alt
-        imageType
-        createdAt
-        rootDirectory
-      }
     }
   }
 `;

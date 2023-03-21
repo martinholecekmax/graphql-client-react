@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Button from '../components/button/button';
 import Images from '../components/images/images';
+import StateHandler from '../components/state-handler/state-handler';
 import TextArea from '../components/text-area/text-area';
 import TextField from '../components/text-field/text-field';
 import {
@@ -23,10 +24,15 @@ const Product = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState({});
+  const [isSaved, setIsSaved] = useState(true);
+
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     variables: { id },
     networkPolicy: 'cache-and-network',
   });
+
+  const [updateProduct, { error: updateProductError }] =
+    useMutation(UPDATE_PRODUCT);
 
   const [removeProduct, { error: removeProductError }] = useMutation(
     REMOVE_PRODUCT,
@@ -38,9 +44,6 @@ const Product = () => {
       },
     }
   );
-
-  const [updateProduct, { error: updateProductError }] =
-    useMutation(UPDATE_PRODUCT);
 
   const onRemove = () => {
     removeProduct();
@@ -63,18 +66,19 @@ const Product = () => {
         },
       },
     });
+    setIsSaved(true);
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  if (!product) return <p>Not found</p>;
 
   const handleUpdate = ({ field, value }) => {
     setProduct((prev) => ({
       ...prev,
       [field]: value,
     }));
+    setIsSaved(false);
   };
+
+  const isLoading = !product || loading;
+  const hasError = error || updateProductError || removeProductError;
 
   return (
     <div className={styles.container}>
@@ -86,7 +90,7 @@ const Product = () => {
         />
         <h3 className={styles.title}>{product.title}</h3>
         <div className={styles.buttons}>
-          <Button onClick={onSave} variant='primary'>
+          <Button onClick={onSave} variant={isSaved ? 'primary' : 'blue'}>
             Save
           </Button>
           <Button onClick={onRemove} variant='flat'>
@@ -94,45 +98,42 @@ const Product = () => {
           </Button>
         </div>
       </div>
-      {removeProductError ? (
-        <div className='alert alert-danger' role='alert'>
-          {removeProductError.message}
+      <StateHandler
+        isLoading={isLoading}
+        hasError={hasError}
+        fallbackLoading={<p>Loading...</p>}
+        fallbackError={<p>Error :( {error?.message}</p>}
+      >
+        <div className={styles.content}>
+          <TextField
+            field='title'
+            label='Title'
+            value={product.title}
+            onChange={handleUpdate}
+          />
+          <TextField
+            field='path'
+            label='Path'
+            value={product.path}
+            onChange={handleUpdate}
+          />
+          <TextField
+            field='price'
+            label='Price'
+            type='number'
+            value={product.price}
+            onChange={handleUpdate}
+          />
+          <TextArea
+            field='description'
+            label='Description'
+            rows={5}
+            value={product.description}
+            onChange={handleUpdate}
+          />
+          <Images imageCollectionId={product.imageCollection?.id} />
         </div>
-      ) : null}
-      {updateProductError ? (
-        <div className='alert alert-danger' role='alert'>
-          {updateProductError.message}
-        </div>
-      ) : null}
-      <div className={styles.content}>
-        <TextField
-          field='title'
-          label='Title'
-          value={product.title}
-          onChange={handleUpdate}
-        />
-        <TextField
-          field='path'
-          label='Path'
-          value={product.path}
-          onChange={handleUpdate}
-        />
-        <TextField
-          field='price'
-          label='Price'
-          type='number'
-          value={product.price}
-          onChange={handleUpdate}
-        />
-        <TextArea
-          field='description'
-          label='Description'
-          rows={5}
-          value={product.description}
-          onChange={handleUpdate}
-        />
-        <Images imageCollectionId={product.imageCollection?.id} />
-      </div>
+      </StateHandler>
     </div>
   );
 };

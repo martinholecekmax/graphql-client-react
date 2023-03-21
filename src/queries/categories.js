@@ -1,41 +1,44 @@
 import { gql } from '@apollo/client';
 
+import { PAGE_INFO_FRAGMENT } from './page-info';
+
+export const CATEGORY_FRAGMENT = gql`
+  fragment CategoryFragment on Category {
+    id
+    title
+    path
+    createdAt
+    updatedAt
+    description
+  }
+`;
+
 export const GET_CATEGORIES = gql`
+  ${CATEGORY_FRAGMENT}
+  ${PAGE_INFO_FRAGMENT}
   query AllCategories($input: CategoryConnectionInput) {
     allCategories(input: $input) {
       nodes {
-        id
-        title
-        path
-        createdAt
-        updatedAt
-        description
+        ...CategoryFragment
         productCollection {
           id
         }
       }
       pageInfo {
-        currentPage
-        hasNextPage
-        hasPreviousPage
-        itemCount
-        pageCount
-        perPage
-        totalCount
+        ...PageInfoFragment
       }
     }
   }
 `;
 
 export const GET_CATEGORY = gql`
+  ${CATEGORY_FRAGMENT}
   query Category($id: ID!) {
     category(id: $id) {
-      id
-      title
-      path
-      createdAt
-      updatedAt
-      description
+      ...CategoryFragment
+      productCollection {
+        id
+      }
     }
   }
 `;
@@ -44,11 +47,6 @@ export const UPDATE_CATEGORY = gql`
   mutation UpdateCategory($input: CategoryInput) {
     updateCategory(input: $input) {
       id
-      title
-      path
-      createdAt
-      updatedAt
-      description
     }
   }
 `;
@@ -65,11 +63,6 @@ export const CREATE_CATEGORY = gql`
   mutation CreateCategory($input: CategoryInput) {
     createCategory(input: $input) {
       id
-      title
-      path
-      createdAt
-      updatedAt
-      description
     }
   }
 `;
